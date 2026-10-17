@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroSupply - MRO Station</title>
+    <!-- Fuente moderna Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos y FontAwesome -->
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- BARRA LATERAL MODERNA -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-plane-departure"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>AeroSupply</h2>
+                    <span>MRO Station</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button id="navCreateBtn" class="nav-item active">
+                    <i class="fa-solid fa-square-plus"></i>
+                    <span>Create Request</span>
+                </button>
+                <button id="navMyReqsBtn" class="nav-item">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>My Requisitions</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar">JS</div>
+                <div class="user-info">
+                    <span class="user-name">J. Serna</span>
+                    <span class="user-role">Line Mechanic</span>
+                </div>
+                <button type="button" class="btn-logout" title="Sign Out" onclick="handleSignOut()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ÁREA PRINCIPAL -->
+        <main class="main-viewport">
+            <header class="app-topbar">
+                <div class="topbar-title">
+                    <h1 id="viewTitle">Create Request</h1>
+                </div>
+                <div class="topbar-actions">
+                    <div class="station-pill">
+                        <span class="status-dot"></span>
+                        CYUL Hangar
+                    </div>
+                </div>
+            </header>
+
+            <div class="scroll-content">
+                <section id="contentArea" class="content-container">
+                    <!-- ==================== VISTA: CREATE REQUEST ==================== -->
+                    <div id="viewCreate" class="form-wrapper">
+
+                        <!-- Tarjeta 1: Información de Contexto y Aeronave -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Request Scope</h3>
+                                <p>Define the target destination, priority, and maintenance reason</p>
+                            </div>
+
+                            <div class="grid-3">
+                                <!-- Target / Matrícula o Stock -->
+                                <div class="input-group">
+                                    <label for="reqDestination">Destination Target <span
+                                            class="required">*</span></label>
+                                    <select id="reqDestination" class="form-control">
+                                        <option value="C-GYBF">Tail Number: C-GYBF (C172S)</option>
+                                        <option value="C-GUBP">Tail Number: C-GUBP (C152)</option>
+                                        <option value="C-FAEN">Tail Number: C-FAEN (C172R)</option>
+                                        <option value="STOCK">General Hangar Stock</option>
+                                    </select>
+                                </div>
+
+                                <!-- Nivel de Urgencia -->
+                                <div class="input-group">
+                                    <label>Urgency Level <span class="required">*</span></label>
+                                    <div class="urgency-toggle">
+                                        <label class="toggle-option active" id="lblRoutine">
+                                            <input type="radio" name="urgencyRadio" value="Routine" checked
+                                                onchange="toggleUrgencyStyle()">
+                                            <i class="fa-regular fa-clock"></i> Routine
+                                        </label>
+                                        <label class="toggle-option" id="lblAOG">
+                                            <input type="radio" name="urgencyRadio" value="AOG"
+                                                onchange="toggleUrgencyStyle()">
+                                            <i class="fa-solid fa-triangle-exclamation"></i> AOG
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Motivo desplegable -->
+                                <div class="input-group">
+                                    <label for="reqReason">Reason for Request <span class="required">*</span></label>
+                                    <select id="reqReason" class="form-control" onchange="handleReasonChange()">
+                                        <option value="Unscheduled Maintenance">Unscheduled Maintenance</option>
+                                        <option value="Scheduled Maintenance">Scheduled Maintenance</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Campo obligatorio condicional oculto por defecto -->
+                            <div id="otherReasonWrapper" class="input-group mt-3" style="display: none;">
+                                <label for="reqOtherReasonDetail">Specify Reason <span class="required">*</span></label>
+                                <input type="text" id="reqOtherReasonDetail" class="form-control"
+                                    placeholder="Provide detailed operational reason...">
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 2: Lista de Partes (Notas integradas en columna horizontal) -->
+                        <div class="card">
+                            <div class="card-header flex-between">
+                                <div>
+                                    <h3>Required Parts</h3>
+                                    <p>Specify parts, quantities, and direct procurement notes or links</p>
+                                </div>
+                                <button type="button" id="btnAddPart" class="btn-secondary" onclick="addPartRow()">
+                                    <i class="fa-solid fa-plus"></i> Add Part Line
+                                </button>
+                            </div>
+
+                            <div class="table-container">
+                                <table class="parts-table" id="partsTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 45px;">#</th>
+                                            <th style="width: 190px;">Part Number (P/N) <span class="required">*</span>
+                                            </th>
+                                            <th>Part Description <span class="required">*</span></th>
+                                            <th style="width: 85px; text-align: center;">Qty <span
+                                                    class="required">*</span></th>
+                                            <th style="width: 250px;">Notes / Reference Link</th>
+                                            <th style="width: 50px; text-align: center;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="partsTableBody">
+                                        <!-- Fila 1 inicial limpia -->
+                                        <tr id="row-1" class="part-main-row">
+                                            <td class="col-index">1</td>
+                                            <td>
+                                                <input type="text" placeholder="e.g. C156-2"
+                                                    class="form-control mono uppercase input-pn" data-row="1"
+                                                    onblur="lookupPartDescription(this, 1)">
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="Description or part name"
+                                                    class="form-control input-desc" data-row="1">
+                                            </td>
+                                            <td>
+                                                <input type="number" min="1" value="1"
+                                                    class="form-control mono text-center input-qty" data-row="1">
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="Optional links, AMM ref, vendor..."
+                                                    class="form-control input-part-note" data-row="1">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn-icon btn-delete"
+                                                    onclick="handleRemoveRow(1)">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Barra de acciones -->
+                        <div class="form-actions">
+                            <button type="button" id="btnResetForm" class="btn-ghost" onclick="resetForm()">Reset
+                                Fields</button>
+                            <button type="button" id="btnSubmitRequest" class="btn-primary" disabled
+                                onclick="validateAndSubmitRequest()">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Request
+                            </button>
+                        </div>
+
+                    </div>
+                    <!-- ==================== VISTA: MY REQUISITIONS (HU-002) ==================== -->
+                    <div id="viewRequisitions" class="form-wrapper hidden">
+
+                        <!-- Barra de Filtros y Búsqueda -->
+                        <div class="card p-card-sm flex-between">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                <input type="text" id="tableSearch"
+                                    placeholder="Search by Request ID, Part Number, or Tail..." class="form-control"
+                                    onkeyup="filterRequisitionsTable()">
+                            </div>
+
+                            <div class="filter-group">
+                                <span class="filter-label">Status:</span>
+                                <button type="button" class="btn-filter active"
+                                    onclick="filterByStatus('ALL', this)">All</button>
+                                <button type="button" class="btn-filter"
+                                    onclick="filterByStatus('Pending', this)">Pending</button>
+                                <button type="button" class="btn-filter"
+                                    onclick="filterByStatus('Quoting', this)">Quoting</button>
+                                <button type="button" class="btn-filter" onclick="filterByStatus('In Transit', this)">In
+                                    Transit</button>
+                                <button type="button" class="btn-filter" onclick="filterByStatus('In Stock', this)">In
+                                    Stock</button>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de Consultas -->
+                        <div class="card p-0">
+                            <div class="table-container border-0">
+                                <table class="parts-table" id="requisitionsTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 140px;">Request ID</th>
+                                            <th style="width: 150px;">Date (UTC)</th>
+                                            <th style="width: 120px;">Destination</th>
+                                            <th style="width: 160px;">Part Number</th>
+                                            <th>Description</th>
+                                            <th style="width: 70px; text-align: center;">Qty</th>
+                                            <th style="width: 100px; text-align: center;">Urgency</th>
+                                            <th style="width: 120px; text-align: center;">Status</th>
+                                            <th style="width: 140px; text-align: center;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="requisitionsTableBody">
+                                        <!-- Requerimiento 1: In Transit -->
+                                        <tr data-id="REQ-2026-0839" data-status="In Transit"
+                                            data-carrier="FedEx Aviation" data-awb="7849-2091-8831"
+                                            data-eta="2026-10-18">
+                                            <td class="col-id">REQ-2026-0839</td>
+                                            <td class="col-date">2026-10-14 14:20</td>
+                                            <td class="col-target">C-GYBF</td>
+                                            <td class="col-pn">C253001-0101</td>
+                                            <td class="col-desc">LOCK ASSY - DOOR L/H</td>
+                                            <td class="col-qty">1</td>
+                                            <td class="text-center"><span class="badge-urgency aog">AOG</span></td>
+                                            <td class="text-center"><span class="badge-status transit">In Transit</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn-table-action"
+                                                    onclick="openDetailsDrawer(this)">Details</button>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Requerimiento 2: Pending -->
+                                        <tr data-id="REQ-2026-0835" data-status="Pending" data-carrier="N/A"
+                                            data-awb="N/A" data-eta="Pending PO">
+                                            <td class="col-id">REQ-2026-0835</td>
+                                            <td class="col-date">2026-10-15 09:12</td>
+                                            <td class="col-target">STOCK</td>
+                                            <td class="col-pn">AN507-1032R10</td>
+                                            <td class="col-desc">MACHINE SCREW</td>
+                                            <td class="col-qty">25</td>
+                                            <td class="text-center"><span class="badge-urgency routine">Routine</span>
+                                            </td>
+                                            <td class="text-center"><span class="badge-status pending">Pending</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="table-actions-cell">
+                                                    <button type="button" class="btn-table-action"
+                                                        onclick="openDetailsDrawer(this)"
+                                                        title="View Details">Details</button>
+                                                    <button type="button" class="btn-icon-action btn-edit-action"
+                                                        onclick="openEditModal(this)" title="Edit Request">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </button>
+                                                    <button type="button" class="btn-icon-action btn-delete-action"
+                                                        onclick="openDeleteModal(this)" title="Cancel Request">
+                                                        <i class="fa-regular fa-trash-can"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Requerimiento 3: In Stock -->
+                                        <tr data-id="REQ-2026-0810" data-status="In Stock"
+                                            data-location="Bay 2 - Shelf B">
+                                            <td class="col-id">REQ-2026-0810</td>
+                                            <td class="col-date">2026-10-04 11:30</td>
+                                            <td class="col-target">C-GYBF</td>
+                                            <td class="col-pn">S3432-A</td>
+                                            <td class="col-desc">NUTPLATE</td>
+                                            <td class="col-qty">10</td>
+                                            <td class="text-center"><span class="badge-urgency routine">Routine</span>
+                                            </td>
+                                            <td class="text-center"><span class="badge-status instock">In Stock</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="table-actions-cell">
+                                                    <button type="button" class="btn-table-action"
+                                                        onclick="openDetailsDrawer(this)"
+                                                        title="View Details">Details</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <!-- DRAWER LATERAL DE DETALLES (HU-002) -->
+    <div id="detailsDrawer" class="drawer-panel hidden">
+        <div class="drawer-header">
+            <div>
+                <span class="drawer-subtitle">Technical Requisition</span>
+                <h3 id="drwId" class="drawer-title">REQ-2026-0839</h3>
+            </div>
+            <button type="button" class="btn-icon" onclick="closeDetailsDrawer()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- Datos generales del requerimiento -->
+            <div class="meta-box">
+                <div class="meta-row"><span>Destination Target:</span><strong id="drwDest">--</strong></div>
+                <div class="meta-row"><span>Part Number:</span><strong id="drwPn">--</strong></div>
+                <div class="meta-row"><span>Description:</span><span id="drwDesc">--</span></div>
+                <div class="meta-row"><span>Operational Status:</span><strong id="drwStatus"
+                        class="status-highlight">--</strong></div>
+            </div>
+
+            <!-- Tarjeta logística (solo visible si está In Transit) -->
+            <div id="drwTransitCard" class="transit-card hidden">
+                <div class="transit-card-header">
+                    <i class="fa-solid fa-plane-arrival"></i>
+                    <span>Logistics Dispatch Track</span>
+                </div>
+                <div class="meta-row"><span>Carrier:</span><strong id="drwCarrier">--</strong></div>
+                <div class="meta-row"><span>AWB / Tracking:</span><span id="drwAwb" class="awb-link">--</span></div>
+                <div class="meta-row"><span>Estimated Arrival:</span><span id="drwEta">--</span></div>
+            </div>
+
+            <!-- Tarjeta de almacén (solo visible si está In Stock) -->
+            <div id="drwStockCard" class="stock-card hidden">
+                <div class="stock-card-header">
+                    <i class="fa-solid fa-warehouse"></i>
+                    <span>Warehouse Placement</span>
+                </div>
+                <div class="meta-row"><span>Storage Location:</span><strong id="drwLoc">--</strong></div>
+                <div class="meta-row"><span>Verification:</span><span>Passed & Available</span></div>
+            </div>
+        </div>
+
+        <div class="drawer-footer">
+            <button type="button" class="btn-ghost w-full" onclick="closeDetailsDrawer()">Close Details</button>
+        </div>
+    </div>
+    <!-- ==================== MODALES OPERATIVAS ==================== -->
+
+    <!-- 1. Modal: Éxito en Registro -->
+    <div id="modalSuccess" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-icon icon-success">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="modal-body text-center">
+                <h3>Request Registered Successfully</h3>
+                <p>The technical requisition has been logged with initial status <span
+                        class="badge-status pending">Pending</span>.</p>
+            </div>
+            <div class="code-box">
+                <span class="code-label">Generated Request Code</span>
+                <span id="successReqId" class="code-value">REQ-2026-0842</span>
+            </div>
+            <!-- Banner de alerta AOG (Criterio 5 HU-001) -->
+            <div id="successAogAlert" class="modal-aog-alert hidden">
+                <div class="aog-alert-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="aog-alert-text">
+                    <strong>CRITICAL AOG DISPATCH ALERT</strong>
+                    <span>Immediate notification broadcasted to Procurement Desk upon approval from Management</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-primary w-full" onclick="handleGoToRequisitions()">
+                    Go to My Requisitions
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Modal: Bloqueo de Duplicado Activo -->
+    <div id="modalBlockedActive" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header-alert">
+                <div class="modal-icon-sm icon-danger">
+                    <i class="fa-solid fa-ban"></i>
+                </div>
+                <div>
+                    <h3>Duplicate Request Blocked</h3>
+                    <span>Active Request Detected (Last 30 Days)</span>
+                </div>
+            </div>
+            <p id="blockedActiveMsg" class="modal-description"></p>
+            <div class="meta-box">
+                <div class="meta-row"><span>Existing ID:</span><strong id="blkReqId">--</strong></div>
+                <div class="meta-row"><span>Destination:</span><strong id="blkTail">--</strong></div>
+                <div class="meta-row"><span>Current Status:</span><strong id="blkStatus"
+                        class="status-highlight">--</strong></div>
+                <div class="meta-row"><span>Logged UTC:</span><span id="blkDate">--</span></div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-dark w-full" onclick="closeModal('modalBlockedActive')">
+                    Understood & Review
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Modal: Advertencia de Existencias en Almacén (In Stock) -->
+    <div id="modalStockWarning" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header-alert">
+                <div class="modal-icon-sm icon-warning">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div>
+                    <h3>Stock Availability Warning</h3>
+                    <span>Component Located In Hangar Warehouse</span>
+                </div>
+            </div>
+            <p id="stockWarningMsg" class="modal-description"></p>
+            <div class="meta-box meta-warning">
+                <div class="meta-row"><span>Physical Location:</span><strong id="warnLoc">--</strong></div>
+                <div class="meta-row"><span>Admission Date:</span><span id="warnDate">--</span></div>
+            </div>
+            <div class="modal-actions-split">
+                <button type="button" class="btn-ghost" onclick="closeModal('modalStockWarning')">
+                    Cancel & Verify
+                </button>
+                <button type="button" class="btn-warning" onclick="handleOverrideStock()">
+                    Proceed Anyway
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 4. Modal: Edición de Requerimiento (Pending) -->
+    <div id="modalEditReq" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header-alert">
+                <div class="modal-icon-sm icon-info">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <div>
+                    <h3>Edit Requisition</h3>
+                    <span id="editModalSub">Modify Quantity or Urgency</span>
+                </div>
+            </div>
+
+            <div class="meta-box">
+                <div class="meta-row"><span>Request ID:</span><strong id="editReqId">--</strong></div>
+                <div class="meta-row"><span>Part Number:</span><strong id="editPn">--</strong></div>
+            </div>
+
+            <div class="form-group" style="margin-top: 1rem;">
+                <label class="form-label">Quantity</label>
+                <input type="number" id="editQtyInput" min="1" class="form-control mono text-center"
+                    style="max-width: 120px;">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Urgency Level</label>
+                <div class="radio-toggle-group">
+                    <label class="radio-toggle">
+                        <input type="radio" name="editUrgencyRadio" value="Routine" id="editUrgRoutine">
+                        <span class="toggle-box"><i class="fa-regular fa-clock"></i> Routine</span>
+                    </label>
+                    <label class="radio-toggle">
+                        <input type="radio" name="editUrgencyRadio" value="AOG" id="editUrgAog">
+                        <span class="toggle-box alert-aog"><i class="fa-solid fa-triangle-exclamation"></i> AOG</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-actions-split" style="margin-top: 1.5rem;">
+                <button type="button" class="btn-ghost" onclick="closeModal('modalEditReq')">Cancel</button>
+                <button type="button" class="btn-primary" onclick="confirmSaveEdit()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Modal: Cancelar / Eliminar con Motivo Obligatorio -->
+    <div id="modalDeleteReq" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header-alert">
+                <div class="modal-icon-sm icon-danger">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+                <div>
+                    <h3>Cancel Requisition</h3>
+                    <span id="deleteModalSub">Formal Cancellation Request</span>
+                </div>
+            </div>
+
+            <div class="meta-box">
+                <div class="meta-row"><span>Request ID:</span><strong id="deleteReqId">--</strong></div>
+                <div class="meta-row"><span>Target:</span><strong id="deleteTarget">--</strong></div>
+            </div>
+
+            <div class="form-group" style="margin-top: 1rem;">
+                <label class="form-label">Cancellation Reason <span style="color:red">*</span></label>
+                <textarea id="deleteReasonInput" rows="3" class="form-control"
+                    placeholder="Specify technical or operational reason for cancelling this order..."></textarea>
+            </div>
+
+            <div class="modal-actions-split" style="margin-top: 1.5rem;">
+                <button type="button" class="btn-ghost" onclick="closeModal('modalDeleteReq')">Keep Request</button>
+                <button type="button" class="btn-danger-solid" onclick="confirmDeleteRequisition()">Confirm
+                    Cancellation</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
