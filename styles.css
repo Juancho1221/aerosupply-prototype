@@ -1116,3 +1116,1645 @@ body {
 .btn-danger-solid:hover {
   background-color: #b91c1c;
 }
+
+
+/* ===================================================
+   MÓDULO: PROCUREMENT & QUOTES (HU-004, HU-005, HU-006)
+   =================================================== */
+
+/* Cabecera de Contexto del Requerimiento */
+.proc-header-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-left: 4px solid var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.proc-context-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.context-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #bae6fd;
+}
+
+.badge-tail {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #334155;
+  background-color: #f1f5f9;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #e2e8f0;
+}
+
+.badge-station {
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.proc-part-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.proc-part-heading .text-secondary-title {
+  color: #475569;
+  font-weight: 600;
+}
+
+.proc-part-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Indicador Global del Flujo de Adquisiciones */
+.proc-workflow-tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.workflow-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+.badge-status-lg {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.status-step-quoting {
+  background-color: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.status-step-approval {
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fef3c7;
+}
+
+.status-step-approved {
+  background-color: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.status-step-purchased {
+  background-color: #eef2ff;
+  color: #4f46e5;
+  border: 1px solid #c7d2fe;
+}
+
+.status-step-rejected {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Demostración interactiva de toggle de urgencia */
+.scenario-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+.scenario-label {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.btn-scenario-toggle {
+  background-color: #ffffff;
+  border: 1px dashed #cbd5e1;
+  color: #475569;
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+
+.btn-scenario-toggle:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+/* Step Tags en los headers de tarjetas */
+.step-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  margin-bottom: 0.35rem;
+}
+
+.table-legend .legend-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  background-color: #f8fafc;
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ===================================================
+   HU-004: TABLA DE COTIZACIONES
+   =================================================== */
+.quotes-table th {
+  padding: 0.85rem 1rem;
+}
+
+.quotes-table td {
+  padding: 0.95rem 1rem;
+}
+
+.vendor-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.vendor-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.vendor-name i {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.vendor-sub {
+  font-size: 0.725rem;
+  color: #64748b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.font-semibold {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Badges de Lead Time */
+.lead-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+}
+
+.lead-express {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.lead-fast {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.lead-standard {
+  background-color: #f8fafc;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.lead-economy {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+/* Botón Select Quote */
+.btn-select-quote {
+  background-color: #ffffff;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-select-quote:hover {
+  background-color: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.15);
+}
+
+/* Fila seleccionada en la tabla */
+.quote-row {
+  transition: background-color 0.15s ease, border-left 0.15s ease;
+}
+
+.quote-row.quote-row-selected {
+  background-color: #f0f9ff !important;
+  border-left: 4px solid var(--primary);
+}
+
+.quote-row.quote-row-selected .btn-select-quote {
+  background-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.3);
+}
+
+/* ===================================================
+   HU-005: SECCIÓN DE APROBACIÓN DE GERENCIA
+   =================================================== */
+.approval-card {
+  border-top: 3px solid #f59e0b;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Banner de desglose de la cotización seleccionada */
+.selected-quote-banner {
+  background-color: #f8fafc;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+  gap: 1.25rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.quote-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.quote-summary-item .label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+.quote-summary-item .value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.text-primary {
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+}
+
+.quote-summary-item.total-item {
+  border-left: 1px solid #cbd5e1;
+  padding-left: 1.25rem;
+}
+
+.quote-summary-item.total-item .text-total {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Banner de alerta de gobernanza de aprobación */
+.approval-alert-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background-color: #fffbeb;
+  border: 1px solid #fef3c7;
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.approval-alert-banner .alert-icon {
+  font-size: 1.25rem;
+  color: #d97706;
+  margin-top: 0.1rem;
+}
+
+.approval-alert-banner .alert-content strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #92400e;
+  margin-bottom: 0.2rem;
+}
+
+.approval-alert-banner .alert-content p {
+  font-size: 0.8rem;
+  color: #b45309;
+  line-height: 1.4;
+}
+
+/* Feedback de Rechazo */
+.rejection-feedback-card {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #dc2626;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rejection-feedback-header {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #b91c1c;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rejection-reason-body {
+  font-size: 0.825rem;
+  color: #7f1d1d;
+  background-color: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #fee2e2;
+  font-style: italic;
+}
+
+.rejection-feedback-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.75rem;
+}
+
+/* Barra de acciones de aprobación */
+.approval-actions-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.manager-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.manager-identity i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.approval-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* Botón Approve (Verde) */
+.btn-approve {
+  background-color: #10b981;
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.6rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.25);
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-approve:hover {
+  background-color: #059669;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Botón Reject (Rojo) */
+.btn-danger {
+  background-color: #ffffff;
+  color: #dc2626;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.4rem;
+  border: 1.5px solid #dc2626;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-danger:hover {
+  background-color: #fef2f2;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.15);
+}
+
+/* ===================================================
+   HU-006: SECCIÓN DE ORDEN DE COMPRA (PO)
+   =================================================== */
+.po-card {
+  border-top: 3px solid #10b981;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+.badge-status-outline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  background-color: #f8fafc;
+  border: 1px dashed #94a3b8;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.field-hint {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-top: 0.2rem;
+}
+
+.po-actions-row {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.btn-generate-po {
+  padding: 0.85rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+}
+
+/* Nuevos badges para estados de aprobación y compra */
+.badge-status.approved {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-status.rejected {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.badge-status.purchased {
+  background-color: #eef2ff;
+  color: #3730a3;
+  border: 1px solid #c7d2fe;
+}
+
+/* Mensaje de error para validación de modal */
+.input-error-msg {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin-top: 0.4rem;
+}
+
+
+/* ===================================================
+   MÓDULO: VENDOR DIRECTORY (HU-003)
+   =================================================== */
+.vendors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.vendor-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.vendor-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+  border-color: #cbd5e1;
+}
+
+.vendor-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.vendor-avatar-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+}
+
+.vendor-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.vendor-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vendor-id-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #0284c7;
+  background-color: #e0f2fe;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.vendor-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: #475569;
+  margin-bottom: 1.25rem;
+}
+
+.vendor-meta-line {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.vendor-meta-line i {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.vendor-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Badges de Acreditación */
+.badge-accreditation {
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.badge-accreditation.approved {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-accreditation.suspended {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.vendor-active-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.vendor-suspended-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* Dummy Tarjeta Suspendida (Greyed out) */
+.vendor-card.vendor-suspended {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+  opacity: 0.85;
+}
+
+.vendor-card.vendor-suspended:hover {
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.vendor-avatar-icon.suspended-icon {
+  background: linear-gradient(135deg, #64748b, #94a3b8);
+  box-shadow: none;
+}
+
+.vendor-suspension-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.4rem;
+  font-size: 0.725rem;
+  color: #991b1b;
+  line-height: 1.35;
+}
+
+.vendor-suspension-alert i {
+  color: #dc2626;
+  margin-top: 0.1rem;
+}
+
+/* ===================================================
+   MÓDULO: LOGISTICS DISPATCH (HU-007)
+   =================================================== */
+.btn-dispatch-action {
+  background-color: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.btn-dispatch-action:hover {
+  background-color: #dbeafe;
+  border-color: #3b82f6;
+  color: #1e40af;
+}
+
+.btn-ghost-sm {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-size: 0.725rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.btn-ghost-sm:hover {
+  color: var(--primary-hover);
+}
+
+/* ===================================================
+   MÓDULO: WAREHOUSE RECEIVING (HU-008)
+   =================================================== */
+.warehouse-header-card {
+  border-left-color: #059669;
+}
+
+.carrier-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.carrier-cell strong {
+  font-size: 0.8rem;
+  color: #1e293b;
+}
+
+.carrier-cell .awb-sub {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.btn-inspect-action {
+  background-color: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-inspect-action:hover {
+  background-color: #d1fae5;
+  border-color: #34d399;
+  color: #065f46;
+}
+
+/* Selector Toggle Packaging Integrity */
+.packaging-toggle-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.packaging-toggle-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 44px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  background-color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.packaging-toggle-option input {
+  display: none;
+}
+
+.packaging-toggle-option.active {
+  background-color: #f0fdf4;
+  border-color: #10b981;
+  color: #065f46;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.15);
+}
+
+.packaging-toggle-option.active.damaged {
+  background-color: #fef2f2;
+  border-color: #ef4444;
+  color: #991b1b;
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.15);
+}
+
+/* Cuadro de Advertencia de No Conformidad */
+.inspection-alert-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #dc2626;
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin-top: 1rem;
+}
+
+.inspection-alert-box i {
+  font-size: 1.25rem;
+  color: #dc2626;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.inspection-alert-box .alert-content strong {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #991b1b;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.inspection-alert-box .alert-content span {
+  display: block;
+  font-size: 0.75rem;
+  color: #b91c1c;
+  line-height: 1.35;
+}
+
+/* Badges de Estado: Received y Quarantined */
+.badge-status.received {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.badge-status.quarantined {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  font-weight: 800;
+  animation: pulseQuarantine 2s infinite ease-in-out;
+}
+
+@keyframes pulseQuarantine {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); }
+  50% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0); }
+}
+
+.font-bold {
+  font-weight: 800;
+}
+
+/* ===================================================
+   MÓDULO: QUALITY ASSURANCE (HU-009, HU-010, HU-011, HU-012)
+   =================================================== */
+
+.qa-header-card {
+  border-left-color: #0284c7;
+}
+
+.badge-part-type {
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.badge-part-type.consumable {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.btn-qa-active {
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+  color: #0284c7;
+  font-weight: 700;
+}
+
+.qa-active-item-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+  border-left: 4px solid #0284c7;
+  border-color: #bae6fd;
+}
+
+/* HU-010: Medidor de vida útil (Shelf Life Calculation) */
+.shelf-life-calc-box {
+  background-color: #f8fafc;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s ease;
+}
+
+.shelf-calc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background-color: #e0f2fe;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.shelf-calc-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.shelf-calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shelf-calc-title {
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.shelf-calc-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0284c7;
+}
+
+.shelf-calc-value.valid {
+  color: #15803d;
+}
+
+.shelf-calc-value.warning {
+  color: #b45309;
+}
+
+.shelf-calc-value.expired {
+  color: #b91c1c;
+  font-weight: 800;
+}
+
+.shelf-life-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.shelf-life-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border-radius: 9999px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.shelf-life-fill.warning {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.shelf-life-fill.expired {
+  background: #dc2626;
+}
+
+.shelf-life-demo-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-scenario-danger {
+  color: #dc2626 !important;
+  border-color: #fca5a5 !important;
+}
+
+.btn-scenario-danger:hover {
+  background-color: #fef2f2 !important;
+}
+
+/* HU-011: Selector de ubicación física */
+.location-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.location-icon {
+  position: absolute;
+  left: 0.95rem;
+  color: #0284c7;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.location-input {
+  padding-left: 2.5rem !important;
+  padding-right: 7rem !important;
+}
+
+.auto-loc-btn {
+  position: absolute;
+  right: 0.85rem;
+}
+
+/* Toolbar de acciones de QA (HU-011 y HU-012) */
+.qa-action-card {
+  border-top: 3px solid #0284c7;
+}
+
+.qa-actions-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.qa-requirements-checklist {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.chk-item {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+
+.chk-item.checked {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.chk-item.checked i {
+  color: #10b981;
+}
+
+.chk-item.failed {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.chk-item.failed i {
+  color: #ef4444;
+}
+
+.qa-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.btn-qa-reject {
+  padding: 0.75rem 1.4rem;
+  font-size: 0.875rem;
+  background-color: #dc2626;
+  color: #ffffff;
+  border: 1px solid #dc2626;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
+  transition: all 0.15s ease;
+}
+
+.btn-qa-reject:hover {
+  background-color: #b91c1c;
+  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-qa-approve {
+  padding: 0.75rem 1.6rem;
+  font-size: 0.875rem;
+  background-color: #10b981;
+  color: #ffffff;
+  border: 1px solid #10b981;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.25);
+  transition: all 0.15s ease;
+}
+
+.btn-qa-approve:hover:not(:disabled) {
+  background-color: #059669;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-qa-approve:disabled {
+  background-color: #94a3b8;
+  border-color: #94a3b8;
+  color: #f1f5f9;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+
+/* ===================================================
+   MÓDULO: AUDIT & TRACEABILITY (HU-013)
+   =================================================== */
+
+.audit-header-card {
+  border-left-color: #6366f1;
+}
+
+.audit-search-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.audit-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  max-width: 580px;
+}
+
+.audit-search-box {
+  max-width: 100%;
+  flex: 1;
+}
+
+.audit-quick-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.text-success {
+  color: #10b981 !important;
+}
+
+/* Banner de resumen del registro auditado */
+.audit-summary-banner {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid #6366f1;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.audit-summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.audit-summary-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.audit-integrity-stamp {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+}
+
+.audit-integrity-stamp i {
+  font-size: 1.5rem;
+  color: #6366f1;
+}
+
+.audit-stamp-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.05em;
+}
+
+.audit-stamp-value {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+/* Contenedor de Línea de Tiempo Vertical (Chronological Timeline) */
+.audit-timeline-card {
+  padding: 2rem;
+}
+
+.timeline-legend .legend-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #334155;
+  background-color: #f8fafc;
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.timeline-container {
+  position: relative;
+  margin-top: 1.5rem;
+  padding-left: 1.25rem;
+}
+
+/* Línea conectora vertical */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 36px;
+  width: 3px;
+  background: linear-gradient(180deg, #0284c7 0%, #10b981 100%);
+  border-radius: 9999px;
+  z-index: 1;
+}
+
+/* Item de hito en la línea de tiempo */
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+  z-index: 2;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0.5rem;
+}
+
+/* Marcador circular del hito */
+.timeline-marker {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #ffffff;
+  flex-shrink: 0;
+  border: 4px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+  transform: scale(1.08);
+}
+
+.marker-requested {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+}
+
+.marker-approved {
+  background: linear-gradient(135deg, #059669, #34d399);
+}
+
+.marker-po {
+  background: linear-gradient(135deg, #6366f1, #a5b4fc);
+}
+
+.marker-dispatched {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+
+.marker-received {
+  background: linear-gradient(135deg, #0d9488, #2dd4bf);
+}
+
+.marker-stocked {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25), 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+/* Tarjeta de contenido del hito */
+.timeline-content {
+  flex: 1;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.timeline-content:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.timeline-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.timeline-title-wrap h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.timeline-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge-step-blue {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.badge-step-green {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-step-purple {
+  background-color: #eef2ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+
+.badge-step-amber {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.badge-step-teal {
+  background-color: #ccfbf1;
+  color: #115e59;
+  border: 1px solid #99f6e4;
+}
+
+.badge-step-emerald {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+
+.timeline-date {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #475569;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.timeline-body p {
+  font-size: 0.825rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.timeline-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+  background-color: #f8fafc;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #f1f5f9;
+}
+
+.t-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.t-meta-item span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+
+.t-meta-item strong {
+  font-size: 0.8rem;
+  color: #1e293b;
+}
+
+.timeline-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.audit-sign {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.audit-status-tag {
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tag-verified {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.tag-complete {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #6ee7b7;
+}
+
+/* Nota de Retención Regulatoria Obligatoria (5-Year Retention Policy) */
+.retention-notice-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-left: 4px solid #475569;
+  border-radius: var(--radius-sm);
+  padding: 1.1rem 1.35rem;
+}
+
+.retention-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background-color: #e2e8f0;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.retention-text strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.03em;
+}
+
+.retention-text span {
+  display: block;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.retention-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.35rem;
+  line-height: 1.4;
+}
